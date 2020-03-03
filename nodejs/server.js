@@ -1,6 +1,7 @@
 
 var http = require('http');
 var querystring = require('querystring');
+var resData = "";
 var options = {
         host: '18.180.10.46:9090', // 请求地址 域名，google.com等..
         port:9090,
@@ -11,7 +12,7 @@ var options = {
         }
     };
     http.get(options, function(res) {
-        var resData = "";
+       
         res.on("data",function(data){
             resData += data;
         });
@@ -22,7 +23,7 @@ var options = {
 const Koa = require('koa');
 const app = new Koa();
 app.use(async ctx => {
-  ctx.body = 'Hello docker';
+  ctx.body = resData;
 });
 app.listen(3000);
 
