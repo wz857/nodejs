@@ -8,6 +8,8 @@ ADD . /app/
 WORKDIR /app
 #安装依赖
 RUN npm install
+## 安装 express
+RUN npm install express --save
 #对外暴露的端口
 EXPOSE 3000
 #程序启动脚本
