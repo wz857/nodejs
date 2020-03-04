@@ -1,30 +1,33 @@
+//express_demo.js 文件
+var express = require('express');
+var app = express();
 
-var http = require('http');
-var querystring = require('querystring');
-var resData = "";
-var options = {
-        host: '18.180.10.46:9090', // 请求地址 域名，google.com等..
-        port:9090,
-        path:path, // 具体路径eg:/upload
-        method: 'GET', // 请求方式, 这里以post为例
-        headers: { // 必选信息,  可以抓包工看一下
-            'Content-Type': 'application/json'
-        }
-    };
-    http.get(options, function(res) {
-       
-        res.on("data",function(data){
-            resData += data;
-        });
-        res.on("end", function() {
-            callback(null,JSON.parse(resData));
-        });
+const http = require("http")
+
+app.get('/', function (req, res) {
+    const url = "http://18.180.10.46:9090/"
+    var html = ""
+    http.get(url, (rs) => {
+        rs.on("data", (data) => {
+            html += data
+        })
+        rs.on("end", () => {
+            console.log(html)
+            res.send(html);
+        })
+    }).on("error", (e) => {
+        console.log(`获取数据失败: ${e.message}`)
     })
-const Koa = require('koa');
-const app = new Koa();
-app.use(async ctx => {
-  ctx.body = resData;
-});
-app.listen(3000);
 
+    
+})
+
+var server = app.listen(3000, function () {
+
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("应用实例，访问地址为 http://%s:%s", host, port)
+
+})
 
